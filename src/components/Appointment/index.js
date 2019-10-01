@@ -4,11 +4,11 @@ import Header from "./Header"
 import Show from "./Show"
 import Empty from "./Empty"
 
-export default function Appointment(props) {
+export default function Appointment({ time, interview }) {
   return (
     <article className="appointment">
-      <Header time={props.time} />
-      {props.interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer.name}/> : <Empty/>}
+      <Header time={time} />
+      {interview ? <Show student={interview.student} interviewer={interview.interviewer.name}/> : <Empty/>}
     </article>
   );
 }
