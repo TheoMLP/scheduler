@@ -4,63 +4,21 @@ import axios from "axios";
 import "components/Application.scss";
 import DayList from "components/DayList";
 import Appointment from "components/Appointment"
-
-const appointments = [
-  {
-    id: 1,
-    time: "12pm",
-  },
-  {
-    id: 2,
-    time: "1pm",
-    interview: {
-      student: "Lydia Miller-Jones",
-      interviewer: {
-        id: 1,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  },
-  {
-    id: 3,
-    time: "2pm",
-    interview: {
-      student: "Alex Cohen",
-      interviewer: {
-        id: 3,
-        name: "Mildred Nazir",
-        avatar: "https://i.imgur.com/T2WwVfS.png",
-      }
-    }
-  },
-  {
-    id: 5,
-    time: "3pm"
-  },
-  {
-    id: 4,
-    time: "4pm",
-    interview: {
-      student: "Joshua Daniel",
-      interviewer: {
-        id: 5,
-        name: "Sven Jones",
-        avatar: "https://i.imgur.com/twYrpay.jpg",
-      }
-    }
-  },
-  {
-    id: "last",
-    time: "6pm"
-  },
-];
+import getAppointmentsForDay from "../helpers/selectors"
 
 export default function Application(props) {
-  const [day, setDay] = useState("Monday");
-  const [days, setDays] = useState([])
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    appointments: {}
+  })
+  const setDay = day => setState({...state, day});
+  // const setDays = days => setState(prev => ({...prev, days}))
 
-  const appointmentList = appointments.map(appointment => {
+  // Array of appointment for a specific day
+  const appointmentsForDay = getAppointmentsForDay(state, state.day)
+
+  const appointmentList = appointmentsForDay.map(appointment => {
     return <Appointment
       key={appointment.id}
       {...appointment}
@@ -68,10 +26,11 @@ export default function Application(props) {
   })
 
   useEffect(() => {
-    axios
-      .get("/api/days")
-      .then(response => {
-        setDays(response.data)
+    const daysPromise = axios.get("/api/days")
+    const appointmentsPromise = axios.get("/api/appointments")
+    Promise.all([daysPromise, appointmentsPromise])
+      .then(results => {
+        setState(prev => ({...prev, days: results[0].data, appointments: results[1].data}))
       })
       .catch(err => {
         console.log(err.stack)
@@ -89,8 +48,8 @@ export default function Application(props) {
          <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
           <DayList
-            days={days}
-            day={day}
+            days={state.days}
+            day={state.day}
             setDay={setDay}
           />
         </nav>
