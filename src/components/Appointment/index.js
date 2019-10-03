@@ -5,14 +5,17 @@ import Show from "./Show"
 import Empty from "./Empty"
 import Form from "./Form"
 import Status from "./Status"
+import Confirm from "./Confirm"
 import useVisualMode from '../hooks/useVisualMode'
 
 const EMPTY = "EMPTY"
 const SHOW = "SHOW"
 const CREATE = "CREATE"
 const SAVING = "SAVING"
+const DELETING = "DELETING"
+const CONFIRM = "CONFIRM"
 
-export default function Appointment({ id, time, interview, interviewers, bookInterview }) {
+export default function Appointment({ id, time, interview, interviewers, bookInterview, cancelInterview }) {
   const { mode, transition, back } = useVisualMode(
     interview ? SHOW : EMPTY
   )
@@ -29,6 +32,18 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
       })
   }
 
+  const onDelete = () => {
+    transition(CONFIRM)
+  }
+
+  const confirmDelete = () => {
+    transition(DELETING)
+    Promise.resolve(cancelInterview(id))
+      .then(result => {
+        transition(EMPTY)
+      })
+  }
+
   return (
     <article className="appointment">
       <Header time={time} />
@@ -37,6 +52,7 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
         <Show
           student={interview.student}
           interviewer={interview.interviewer.name}
+          onDelete={onDelete}
         />
       )}
       {mode === CREATE && (
@@ -48,6 +64,16 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
       )}
       {mode === SAVING && (
         <Status message="Saving" />
+      )}
+      {mode === DELETING && (
+        <Status message="Deleting" />
+      )}
+      {mode === CONFIRM && (
+        <Confirm
+          message="Are you sure you would like to delete?"
+          onConfirm={confirmDelete}
+          onCancel={() => back()}
+        />
       )}
     </article>
   );
