@@ -21,7 +21,25 @@ export default function useApplicationData() {
         }
       }
       case SET_INTERVIEW: {
-        return { ...state, appointments: action.appointments, days: action.days}
+        const dayOfAppointment = state.days.find(d => d.appointments.includes(action.id))
+
+        const countSpots = (day) => {
+          let nbOfSpots = 0
+          day.appointments.forEach(appointment => {
+            if (!action.appointments[appointment].interview) {
+              nbOfSpots += 1
+            }
+          })
+          return nbOfSpots
+        }
+
+        const day = { ...dayOfAppointment, spots: countSpots(dayOfAppointment) }
+        const index = state.days.indexOf(dayOfAppointment)
+        
+        const days = [...state.days]
+        days[index] = day
+
+        return { ...state, appointments: action.appointments, days }
       }
       default: {
         throw new Error(
@@ -80,16 +98,9 @@ export default function useApplicationData() {
       [id]: appointment
     }
 
-    const dayOfAppointment = state.days.find(d => d.appointments.includes(id))
-    const day = { ...dayOfAppointment, spots: dayOfAppointment.spots - 1 }
-    
-    const index = state.days.indexOf(dayOfAppointment)
-    const days = [...state.days]
-    days[index] = day
-
     return axios.put(`/api/appointments/${id}`, { interview })
       .then(response => {
-        dispatch({ type: SET_INTERVIEW, appointments, days })
+        dispatch({ type: SET_INTERVIEW, appointments, id})
       })
   }
   
@@ -104,17 +115,10 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     }
-
-    const dayOfAppointment = state.days.find(d => d.appointments.includes(id))
-    const day = { ...dayOfAppointment, spots: dayOfAppointment.spots + 1 }
-
-    const index = state.days.indexOf(dayOfAppointment)
-    const days = [...state.days]
-    days[index] = day
   
     return axios.delete(`/api/appointments/${id}`)
       .then(response => {
-        dispatch({ type: SET_INTERVIEW, appointments, days})
+        dispatch({ type: SET_INTERVIEW, appointments, id})
       })
   }
 
