@@ -37,7 +37,7 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
 
   const confirmDelete = () => {
     transition(DELETING, true)
-    
+
     Promise.resolve(cancelInterview(id))
       .then(result => transition(EMPTY))
       .catch(err => transition(ERROR_DELETE, true))
