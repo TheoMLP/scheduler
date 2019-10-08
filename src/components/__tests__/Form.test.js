@@ -72,15 +72,3 @@ describe('Form', () => {
     expect(onCancel).toHaveBeenCalledTimes(1)
   })
 })
-
-//When we use getByText we should be confident that the element exists. 
-//If it does not exist, then it throws an error instead. 
-//We can test for the absence of something by using queryByText and checking that the value is null.
-
-//We will use the fireEvent[eventName] functions to trigger events on specific nodes
-
-
-//We have improved the test by making it resemble the way we use our software. 
-//Instead of initializing the component with a default value, we simulate user interaction.
-
-// If we declare a test with xit() instead of it(), it will skip the test.
