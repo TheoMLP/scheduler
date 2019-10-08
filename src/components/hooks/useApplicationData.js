@@ -1,54 +1,8 @@
 import React, { useState, useEffect, useReducer } from 'react'
 import axios from "axios";
+import reducer, { SETDAY, SET_APPLICATION_DATA, SET_INTERVIEW } from 'reducers/application'
 
 export default function useApplicationData() {
-
-  const SETDAY = "SETDAY"
-  const SET_APPLICATION_DATA = "SET_APPLICATION_DATA"
-  const SET_INTERVIEW = "SET_INTERVIEW"
-
-  const reducer = (state, action) => {
-    switch(action.type) {
-      case SETDAY: {
-        return { ...state, day: action.day }
-      }
-      case SET_APPLICATION_DATA: {
-        return {
-          ...state,
-          days: action.days,
-          appointments: action.appointments,
-          interviewers: action.interviewers
-        }
-      }
-      case SET_INTERVIEW: {
-        const dayOfAppointment = state.days.find(d => d.appointments.includes(action.id))
-
-        const countSpots = (day) => {
-          let nbOfSpots = 0
-          day.appointments.forEach(appointment => {
-            if (!action.appointments[appointment].interview) {
-              nbOfSpots += 1
-            }
-          })
-          return nbOfSpots
-        }
-
-        const day = { ...dayOfAppointment, spots: countSpots(dayOfAppointment) }
-        const index = state.days.indexOf(dayOfAppointment)
-        
-        const days = [...state.days]
-        days[index] = day
-
-        return { ...state, appointments: action.appointments, days }
-      }
-      default: {
-        throw new Error(
-          `Tried to reduce with unsupported action type: ${action.type}`
-        )
-      }
-    }
-  }
-
   //organization of the state
   const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
