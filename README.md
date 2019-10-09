@@ -14,22 +14,19 @@ Interview scheduler allows users to book meetings with interviewers on any given
 
 ## Final Product
 
-!["Owl blinking and button animation when submitting a new tweet"](https://github.com/TheoMLP/tweeter/blob/master/docs/Owl-Blinking-on-submit.webm)
+!["Main page display & Book/Edit interview functionality"](https://github.com/TheoMLP/scheduler/blob/master/docs/Book_interview_functionality.png?raw=true)
 
-!["Scroll back up functionality and animation"](https://github.com/TheoMLP/tweeter/blob/master/docs/Scroll-Back-Up-Functionality.webm)
+!["Confirm delete functionality"](https://github.com/TheoMLP/scheduler/blob/master/docs/confirm_delete_functionality.png?raw=true)
 
-!["Main page computer display"](https://github.com/TheoMLP/tweeter/blob/master/docs/computerDisplay.png)
-
-!["Main page mobile / tablet display"](https://github.com/TheoMLP/tweeter/blob/master/docs/mobileDisplay.png)
+!["Responsive loading and deleting functionality"](https://github.com/TheoMLP/scheduler/blob/master/docs/responsive_loading_functionality.png?raw=true)
 
 ## Getting Started
 
 1. Fork this repository, then clone it.
 2. Install the dependencies using the `npm install` command.
 3. Start the Webpack Development Server using`npm start`. The app will be served at <http://localhost:8000/>.
-4. Start the API server using the `npm start` command for data to be persistent.
-5. Go to <http://localhost:8000/> in your browser.
-6. Enjoy the full features of the website (Look at the remaining spots for a given day and the available interviewers)
+4. Go to <http://localhost:8000/> in your browser.
+5. Enjoy the full features of the website (Look at the remaining spots for a given day and the available interviewers)
 
 ## Run the Webpack Development Server
 
