@@ -14,10 +14,13 @@ Interview scheduler allows users to book meetings with interviewers on any given
 
 ## Final Product
 
+Main page display & Book/Edit interview functionality:
 !["Main page display & Book/Edit interview functionality"](https://github.com/TheoMLP/scheduler/blob/master/docs/Book_interview_functionality.png?raw=true)
 
+Confirm delete functionality:
 !["Confirm delete functionality"](https://github.com/TheoMLP/scheduler/blob/master/docs/confirm_delete_functionality.png?raw=true)
 
+Responsive loading and deleting functionality:
 !["Responsive loading and deleting functionality"](https://github.com/TheoMLP/scheduler/blob/master/docs/responsive_loading_functionality.png?raw=true)
 
 ## Getting Started
