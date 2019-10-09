@@ -4,13 +4,14 @@ import "components/InterviewerList.scss"
 import PropTypes from 'prop-types'
 
 export default function InterviewerList({interviewers, value, onChange}) {
-  const interviewersList = interviewers.map(i => {
+  const interviewersList = interviewers.map(interviewer => {
     return <InterviewerListItem
-      id={i.id}
-      name={i.name}
-      avatar={i.avatar}
-      selected={i.id === value}
-      setInterviewer={event => onChange(i.id)}
+      key={interviewer.id}
+      id={interviewer.id}
+      name={interviewer.name}
+      avatar={interviewer.avatar}
+      selected={interviewer.id === value}
+      setInterviewer={event => onChange(interviewer.id)}
     />
   })
   return (

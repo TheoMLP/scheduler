@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import InterviewerList from '../InterviewerList'
 import Button from '../Button'
-import { Z_STREAM_ERROR } from 'zlib'
 
 export default function Form(props) {
   const [name, setName] = useState(props.name || "");

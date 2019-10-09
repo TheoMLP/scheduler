@@ -7,14 +7,14 @@ import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../h
 import useApplicationData from  "components/hooks/useApplicationData"
 
 export default function Application(props) {
-  //data management obj and func
+  //obj and func from the useReducer hook used for data management
   const { state, setDay, bookInterview, cancelInterview } = useApplicationData();
 
   // Arrays of appointment and interviewers for a specific day
   const appointmentsForDay = getAppointmentsForDay(state, state.day)
   const interviewersForDay = getInterviewersForDay(state, state.day)
 
-  //Appointment component rendering
+  //Appointment list rendering
   const schedule = appointmentsForDay.map(appointment => {
     const interview = getInterview(state, appointment.interview)
 

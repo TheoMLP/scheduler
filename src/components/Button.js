@@ -1,7 +1,6 @@
 import React from "react";
 
 import "components/Button.scss";
-import { arrowFunctionExpression } from "@babel/types";
 import classNames from 'classnames'
 
 export default function Button({confirm, danger, onClick, disabled, children}) {
